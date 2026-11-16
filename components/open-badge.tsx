@@ -42,7 +42,8 @@ export function OpenBadge({ fallback = 'Open daily' }: { fallback?: string }) {
   }, []);
 
   return (
-    <span className="open-badge" data-open={label ? String(label.open) : undefined}>
+    <span className="inline-flex items-center gap-2 rounded-full border-[1.5px] border-line bg-surface py-1.5 pr-3.5 pl-3 text-[.9rem] font-bold shadow-card"
+      data-open={label ? String(label.open) : undefined}>
       <span className="open-badge__dot" aria-hidden="true" />
       <span>{label?.text ?? fallback}</span>
     </span>

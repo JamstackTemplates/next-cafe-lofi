@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { MenuArt } from '../components/menu-art';
+import { PageHead } from '../components/page-head';
 import { SiteLink } from '../components/site-link';
 
 export const metadata: Metadata = {
@@ -9,12 +10,12 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <section className="wrap page-head not-found" aria-labelledby="not-found-title">
-      <MenuArt art="cup" color="#5b3a29" size={96} />
-      <p className="eyebrow">404</p>
-      <h1 id="not-found-title" className="page-head__title">This page wandered off <em>for a coffee</em></h1>
-      <p className="lede">The link may be out of date, or the page may have moved. These might help:</p>
-      <ul className="link-list">
+    <section className="pb-(--space-section)" aria-labelledby="not-found-title">
+      <PageHead id="not-found-title" eyebrow="404" title={<>This page wandered off <em>for a coffee</em></>}
+        before={<MenuArt art="cup" color="#5b3a29" size={96} className="mb-2" />}>
+        <p>The link may be out of date, or the page may have moved. These might help:</p>
+      </PageHead>
+      <ul className="wrap flex flex-wrap gap-x-6 gap-y-3 text-[1.1rem]">
         <li><SiteLink href="/" className="text-link">Home</SiteLink></li>
         <li><SiteLink href="/menu/" className="text-link">Menu</SiteLink></li>
         <li><SiteLink href="/#find-us" className="text-link">Hours &amp; directions</SiteLink></li>

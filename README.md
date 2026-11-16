@@ -39,7 +39,7 @@ Every page reads from two content files, so there are no duplicated strings to h
 | --- | --- |
 | [content/menu.ts](content/menu.ts) | Menu sections, items, prices and sizes, dietary tags, stickers, availability, add-ons, allergy notes, currency |
 | [content/cafe.ts](content/cafe.ts) | Name, tagline, introduction, story, email, phone, address (plus an optional landmark/cross-streets `note`), directions, opening hours, notice, amenities, playlist, FAQs, social links |
-| [app/globals.css](app/globals.css) | Colours (including the illustration palette), fonts and spacing are tokens at the top of the file |
+| [app/tailwind.input.css](app/tailwind.input.css) | Colours (including the illustration palette), fonts and other customizations. Components are styled with Tailwind classes |
 | `public/og.png` | 1200×630 social preview image |
 | `app/icon.svg` | Browser tab icon |
 | [site.config.json](site.config.json) | Site name/description, your time zone and public deployment settings (see below) |
@@ -92,7 +92,7 @@ All three are free and need no Google account or API key:
 - The links use Google's documented [Maps URLs](https://developers.google.com/maps/documentation/urls/get-started).
 - The map uses Google's keyless embed (the `google.com/maps/embed?pb=…` form that `google.com/maps?q=…&output=embed` redirects to). It's widely used but isn't a documented API. For Google's officially supported option, create a free [Maps Embed API](https://developers.google.com/maps/documentation/embed/get-started) key restricted to your domain and change `mapEmbedUrl` in [lib/maps.ts](lib/maps.ts) to the `maps/embed/v1/place` form shown there. Embed API keys are meant to be public, so this is safe in a static site.
 
-The map is lazy-loaded, so Google is only contacted when it scrolls into view. Google may set cookies in the embedded map, so mention it in your privacy notice if you have one. In dark mode a CSS filter (`--map-filter` in `app/globals.css`) turns it into a night map that matches the theme. Set it to `none` to show Google's normal colours.
+The map is lazy-loaded, so Google is only contacted when it scrolls into view. Google may set cookies in the embedded map, so mention it in your privacy notice if you have one. In dark mode a CSS filter (`--map-filter` in `app/tailwind.input.css`) turns it into a night map that matches the theme. Set it to `none` to show Google's normal colours.
 
 Text is rendered as plain text, never HTML. Don't present invented reviews or awards as fact.
 
@@ -100,13 +100,15 @@ Text is rendered as plain text, never HTML. Don't present invented reviews or aw
 
 The header uses `DarkModeToggle` from the published `jamstacks` React package. The root layout supplies `ThemeProvider` and the early `ThemeScript`, so a saved preference applies before the first paint and stays consistent across navigation and tabs.
 
-The hero window, menu drawings and cassette are inline SVG/CSS coloured by tokens in `app/globals.css`. The same drawings turn from a pastel morning into a rainy night when the theme changes; there are no image files to swap. Gentle animations (steam, rain, twinkling lights, the ticker and spinning reels) stop for visitors who prefer reduced motion.
+The hero window, menu drawings and cassette are inline SVG/CSS coloured by tokens in `app/tailwind.input.css`. The same drawings turn from a pastel morning into a rainy night when the theme changes; there are no image files to swap. Gentle animations (steam, rain, twinkling lights, the ticker and spinning reels) stop for visitors who prefer reduced motion.
+
+Styling uses [Tailwind CSS v4](https://tailwindcss.com). Components use utility classes such as `bg-surface text-ink`, built from the template's own colour tokens; Tailwind's default palette is switched off so the look stays consistent. To change a colour, edit its variable in `app/tailwind.input.css` (light `:root` and both dark blocks). To add one, such as a custom accent, add a variable there and map it in `@theme inline` (`--color-highlight: var(--highlight)` gives `bg-highlight`, `text-highlight` and so on).
 
 Fonts are [Fraunces](https://fonts.google.com/specimen/Fraunces) (soft axis) for headings and [Nunito](https://fonts.google.com/specimen/Nunito) for text, both self-hosted through `@fontsource-variable` packages under the SIL Open Font License.
 
 ## Footer credit
 
-The footer ends with "Made with [Jamstacks](https://jamstacks.net) · Static website. Dynamic components." It's an ordinary link in [components/site-footer.tsx](components/site-footer.tsx). This is your website, so you can keep, reword or remove it.
+The footer ends with "made with ❤️ by [jamstacks.net](https://jamstacks.net)". It's an ordinary link in [components/site-footer.tsx](components/site-footer.tsx). This is your website, so you can keep, reword or remove it.
 
 ## Configuration
 
@@ -162,7 +164,7 @@ How it behaves:
 
 **Why Contact uses full page loads:** the current shared runtime finds the form's host when its script runs and stops watching for new hosts after ten seconds; it has no public "remount" API. Links to and from Contact therefore do an ordinary full page load (all other links use fast client-side navigation), so the form appears reliably. This is handled by [components/site-link.tsx](components/site-link.tsx).
 
-**Styling:** the page maps its design tokens to the shared `--jamstacks-*` CSS variables at the top of [app/globals.css](app/globals.css). A theme you publish in the portal overrides these on the component itself. Don't style the component's internals; they're owned by the runtime.
+**Styling:** the page maps its design tokens to the shared `--jamstacks-*` CSS variables in [app/tailwind.input.css](app/tailwind.input.css). A theme you publish in the portal overrides these on the component itself. Don't style the component's internals; they're owned by the runtime.
 
 **Content Security Policy:** none is set by this template. If you add one, allow scripts from your Jamstacks CDN origin, the spam-check provider used by the form (`https://challenges.cloudflare.com` for scripts and frames), `connect-src` to the API origin your published form uses, and `frame-src https://www.google.com` for the map. Inline structured data and the theme script also need a nonce or hash. Avoid wildcards and `unsafe-eval`.
 

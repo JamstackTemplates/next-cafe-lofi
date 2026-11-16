@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode } from 'react';
 import type { Art } from '../content/menu';
 
 // Little illustrations for menu items, drawn on a 64×64 grid.
-// `color` tints the drink or bake; outlines and ceramics come from theme tokens in globals.css.
+// `color` tints the drink or bake; outlines and ceramics come from theme tokens in tailwind.input.css.
 
 const line = { stroke: 'var(--art-line)', strokeWidth: 2, strokeLinejoin: 'round', strokeLinecap: 'round' } as const;
 const shine = 'rgba(255,255,255,.45)';

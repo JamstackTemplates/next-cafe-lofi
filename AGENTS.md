@@ -23,15 +23,25 @@ content editing, deployment and the optional Jamstacks contact form.
   there). Change it there, not in content; without it the open-now badge stays neutral.
 - Keep item and section ids unique, lowercase and hyphenated; they are page anchors. Use an existing
   `art` drawing and a `color` for new items rather than adding image files.
-- `app/globals.css` owns the design tokens, including the illustration palette for light (morning)
-  and dark (night). Keep the two dark blocks identical. Preserve readable contrast, responsive layouts,
-  visible keyboard focus, semantic headings and reduced-motion support.
+- Colours, including the illustration palette for light (morning) and dark (night), are tokens in
+  `app/tailwind.input.css` (see Styling).
 - Keep content separate from `site.config.json`: Jamstacks may rewrite deployment fields there.
 - Text is rendered as plain text. Don't invent reviews, awards or claims for a real business.
 
-## Footer credit
+## Styling (Tailwind CSS v4)
 
-- Keep the footer's "Made with Jamstacks" credit link to https://jamstacks.net unless the owner asks to remove it.
+- Style components with Tailwind utility classes in the TSX. Don't add global CSS for one-off styles.
+- `app/tailwind.input.css` holds everything utilities can't express: the colour tokens (`:root` for light,
+  plus two dark blocks that must stay identical), the `@theme` built from them, base element styles,
+  shared building blocks (`.button`, `.button-ghost`, `.text-link`, `.eyebrow`, `.chip`, `.sticker`, `.card`), the illustrations and animation, and styles driven by data attributes.
+- Only this template's palette exists (`bg`, `surface`, `ink`, `muted`, `line`, `accent`, `accent-2`, `sage`, `peach`, `footer` and their variants). Tailwind's default colours are switched off. To add a
+  colour, such as a custom accent, add a variable to `:root` and both dark blocks, then map it in
+  `@theme inline` as `--color-name: var(--variable)` to get `bg-name`, `text-name` and so on.
+- Colours switch with the theme through the tokens, so prefer them to `dark:` variants (`dark:` follows `html.dark`).
+- Reuse the building blocks and existing components (e.g. `PageHead`) instead of restyling each instance.
+  Add a reusable layout helper with `@utility`.
+- Keep the `--jamstacks-*` component variables mapped to the tokens. Preserve readable contrast in both
+  themes, responsive layouts from 360px, visible keyboard focus, semantic headings and reduced-motion support.
 
 ## Static architecture
 
