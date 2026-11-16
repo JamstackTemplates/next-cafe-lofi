@@ -1,0 +1,10 @@
+{
+  "name": "Lofi Café",
+  "description": "Slow coffee, soft beats and a warm seat by the window. Menu, opening hours and how to find us.",
+  "domain": "",
+  "timeZone": "America/New_York",
+  "jamstacks": {
+    "siteId": "",
+    "cdnUrl": "https://cdn.jamstacks.net"
+  }
+}
